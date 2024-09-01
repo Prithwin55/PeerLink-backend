@@ -19,12 +19,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin("*")
 @AllArgsConstructor
 @RequestMapping("auth/peerlink/user")
 public class AuthController {
@@ -51,7 +49,7 @@ public class AuthController {
         return new ResponseEntity(result,HttpStatus.CREATED);
     }
 
-    @PostMapping("/signin")
+    @PostMapping("/signin" )
     public ResponseEntity<AuthResponse> signIn(@RequestBody LoginRequest loginRequest){
         Authentication authentication=authenticate(loginRequest.getEmail(),loginRequest.getPassword());
         String token= JwtProvider.generateToken(authentication);
