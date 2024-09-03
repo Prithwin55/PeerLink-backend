@@ -4,4 +4,6 @@ public interface UserValidation {
     public  boolean checkEmailAlreadyExist(String email);
     public boolean checkUserExistById(long id);
     public boolean checkAlreadyFollows(long id1,long id2);
+
+
 }

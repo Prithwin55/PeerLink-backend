@@ -7,6 +7,7 @@ import com.peerlink_backend.peerlink_backend.api.mapper.user.UserMapper;
 import com.peerlink_backend.peerlink_backend.api.authFormats.AuthResponse;
 import com.peerlink_backend.peerlink_backend.data.entity.user.User;
 import com.peerlink_backend.peerlink_backend.data.exception.ResourceAlreadyExistException;
+import com.peerlink_backend.peerlink_backend.data.exception.ResourceNotFoundException;
 import com.peerlink_backend.peerlink_backend.data.repository.user.UserRepository;
 import com.peerlink_backend.peerlink_backend.data.service.user.UserService;
 import com.peerlink_backend.peerlink_backend.data.service.userDetailsService.CustomerUserDetailsService;
@@ -18,6 +19,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -51,15 +53,23 @@ public class AuthController {
 
     @PostMapping("/signin" )
     public ResponseEntity<AuthResponse> signIn(@RequestBody LoginRequest loginRequest){
-        Authentication authentication=authenticate(loginRequest.getEmail(),loginRequest.getPassword());
-        String token= JwtProvider.generateToken(authentication);
+        if(!userValidation.checkEmailAlreadyExist(loginRequest.getEmail()))
+            throw  new ResourceNotFoundException("Email Does Not Exist");
+        User user=userRepository.findByEmail(loginRequest.getEmail()).orElseThrow(()->new UsernameNotFoundException("User Not Found"));
+        if(!passwordEncoder.matches(loginRequest.getPassword(),user.getPassword()))
+            throw new ResourceNotFoundException("Invalid Password");
 
-        AuthResponse result=new AuthResponse(token,"USER LOGIN SUCCESSFULL");
+            Authentication authentication=authenticate(loginRequest.getEmail(),loginRequest.getPassword());
+            String token= JwtProvider.generateToken(authentication);
 
-        return new ResponseEntity(result,HttpStatus.OK);
+            AuthResponse result=new AuthResponse(token,"USER LOGIN SUCCESSFULL");
+
+            return new ResponseEntity(result,HttpStatus.OK);
+
     }
 
     private Authentication authenticate(String email, String password) {
+
         UserDetails userDetails=customerUserDetailsService.loadUserByUsername(email);
         if(userDetails==null)
             throw new BadCredentialsException("Invalid Username");
