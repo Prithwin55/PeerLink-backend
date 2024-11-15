@@ -1,6 +1,7 @@
 package com.peerlink_backend.peerlink_backend.data.entity.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.peerlink_backend.peerlink_backend.data.entity.comment.Comment;
 import com.peerlink_backend.peerlink_backend.data.entity.post.Post;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -44,4 +45,7 @@ public class User {
     @Column(name="savedPost")
     @ManyToMany
     private List<Post> savedPosts=new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<Comment> comments=new ArrayList<>();
 }
