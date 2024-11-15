@@ -27,7 +27,7 @@ public class AppConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http)throws Exception{
 
 //        http.sessionManagement(management->management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                http.authorizeHttpRequests(authorize->authorize.requestMatchers("/api/**")
+                http.cors().and().authorizeHttpRequests(authorize->authorize.requestMatchers("/api/**")
                 .authenticated().anyRequest().permitAll())
                 .addFilterBefore(new JwtValidator(), BasicAuthenticationFilter.class)
                 .csrf(csrf->csrf.disable());
@@ -45,6 +45,11 @@ public class AppConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**").allowedOrigins("*");
+//                registry.addMapping("/**")
+//                        .allowedOrigins("http://localhost:3000").allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+//                        .allowedHeaders("Authorization", "Content-Type")
+//                        .allowCredentials(true);
+
             }
         };
     }
