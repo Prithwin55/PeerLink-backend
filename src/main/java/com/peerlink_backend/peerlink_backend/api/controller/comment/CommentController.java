@@ -16,4 +16,14 @@ public class CommentController {
     public ResponseEntity<CommentDto> createComment(@RequestBody CommentDto commentDto,@PathVariable long postId, @RequestHeader("Authorization") String jwt){
        return new ResponseEntity( commentService.createComment(commentDto,postId,jwt), HttpStatus.CREATED);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<CommentDto> findCommentById(@PathVariable long id){
+        return new ResponseEntity( commentService.findCommentById(id), HttpStatus.OK);
+    }
+
+    @PostMapping("/like/{id}")
+    public ResponseEntity<CommentDto> likeComment( @RequestHeader("Authorization") String jwt,@PathVariable long id){
+        return new ResponseEntity( commentService.likeComment(jwt,id), HttpStatus.OK);
+    }
 }

@@ -8,6 +8,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name="comment")
 @Getter
@@ -27,4 +30,7 @@ public class Comment {
     @ManyToOne
     @JoinColumn(name = "post_id")
     private Post post;
+
+    @ManyToMany
+    private List<User> liked=new ArrayList<>();
 }

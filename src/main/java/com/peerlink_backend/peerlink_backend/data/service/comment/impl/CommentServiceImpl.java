@@ -14,6 +14,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 @Service
@@ -30,8 +31,34 @@ public class CommentServiceImpl implements CommentService {
                 .orElseThrow(()->new ResourceNotFoundException("User Not Found"));
         Post post=postRepository.findById(postID)
                 .orElseThrow(()->new ResourceNotFoundException("Post Not Found"));
-        Comment comment=new Comment(commentDto.getId(), commentDto.getContent(), user,post);
+        Comment comment=new Comment(commentDto.getId(), commentDto.getContent(), user,post,new ArrayList<>());
         commentRepository.save(comment);
+        return CommentMapper.INSTANCE.mapToDto(comment);
+    }
+
+    @Override
+    public CommentDto findCommentById(long id) {
+       Comment comment= commentRepository.findById(id)
+                .orElseThrow(()->new ResourceNotFoundException("Comment Not Found"));
+       return CommentMapper.INSTANCE.mapToDto(comment);
+    }
+
+    @Override
+    public CommentDto likeComment(String jwt, long commentId) {
+        String email= JwtProvider.getEmailFromJwtToken(jwt);
+        User user=userRepository.findByEmail(email)
+                .orElseThrow(()->new ResourceNotFoundException("User Not Found"));
+
+        Comment comment=commentRepository.findById(commentId)
+                .orElseThrow(()->new ResourceNotFoundException("Comment Not Found"));
+
+        if(!comment.getLiked().contains(user))
+            comment.getLiked().add(user);
+        else
+            comment.getLiked().remove(user);
+
+        commentRepository.save(comment);
+
         return CommentMapper.INSTANCE.mapToDto(comment);
     }
 }

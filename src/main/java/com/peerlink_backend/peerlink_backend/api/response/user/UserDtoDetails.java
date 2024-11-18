@@ -1,7 +1,9 @@
 package com.peerlink_backend.peerlink_backend.api.response.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.peerlink_backend.peerlink_backend.api.dto.comment.CommentDto;
 import com.peerlink_backend.peerlink_backend.api.dto.post.PostDto;
+import com.peerlink_backend.peerlink_backend.api.response.comment.CommentDtoDetails;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,4 +26,5 @@ public class UserDtoDetails {
     private List<Long> following;
     private List<PostDto> posts;
     private List<PostDto> savedPosts;
+    private List<CommentDtoDetails> comments;
 }
