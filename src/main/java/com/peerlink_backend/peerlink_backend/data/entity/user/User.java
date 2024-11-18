@@ -49,4 +49,8 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private List<Comment> comments=new ArrayList<>();
+
+    @ManyToMany
+    @Column(name = "likedComments")
+    private List<Comment> likedComments=new ArrayList<>();
 }

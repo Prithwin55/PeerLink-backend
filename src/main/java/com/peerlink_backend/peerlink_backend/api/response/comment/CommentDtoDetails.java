@@ -1,4 +1,5 @@
-package com.peerlink_backend.peerlink_backend.api.dto.comment;
+package com.peerlink_backend.peerlink_backend.api.response.comment;
+
 
 import com.peerlink_backend.peerlink_backend.api.dto.post.PostDto;
 import com.peerlink_backend.peerlink_backend.api.dto.user.UserDto;
@@ -14,10 +15,10 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-public class CommentDto {
+public class CommentDtoDetails {
     private long id;
     private String content;
     private UserDto user;
     private PostDto post;
-    private List<UserDtoDetails> liked;
+    //private List<UserDtoDetails> liked;
 }
