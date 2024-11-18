@@ -1,5 +1,6 @@
 package com.peerlink_backend.peerlink_backend.data.entity.comment;
 
+import com.peerlink_backend.peerlink_backend.data.entity.post.Post;
 import com.peerlink_backend.peerlink_backend.data.entity.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -23,4 +24,7 @@ public class Comment {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+    @ManyToOne
+    @JoinColumn(name = "post_id")
+    private Post post;
 }

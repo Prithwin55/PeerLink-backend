@@ -1,6 +1,7 @@
 package com.peerlink_backend.peerlink_backend.data.entity.post;
 
 import com.peerlink_backend.peerlink_backend.api.dto.user.UserDto;
+import com.peerlink_backend.peerlink_backend.data.entity.comment.Comment;
 import com.peerlink_backend.peerlink_backend.data.entity.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -43,5 +44,10 @@ public class Post {
     @ManyToMany
     @Column(name = "liked")
     private List<User> liked=new ArrayList<>();
+
+    @OneToMany(mappedBy = "post",cascade = CascadeType.ALL)
+    @Column(name = "comments")
+    private List<Comment> comments=new ArrayList<>();
+
 
 }
