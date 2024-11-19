@@ -3,6 +3,8 @@ package com.peerlink_backend.peerlink_backend.data.entity.user;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.peerlink_backend.peerlink_backend.data.entity.comment.Comment;
 import com.peerlink_backend.peerlink_backend.data.entity.post.Post;
+import com.peerlink_backend.peerlink_backend.data.entity.reel.Reel;
+import com.peerlink_backend.peerlink_backend.data.entity.story.Story;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -53,4 +55,10 @@ public class User {
     @ManyToMany
     @Column(name = "likedComments")
     private List<Comment> likedComments=new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<Reel> reels=new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<Story> stories=new ArrayList<>();
 }
