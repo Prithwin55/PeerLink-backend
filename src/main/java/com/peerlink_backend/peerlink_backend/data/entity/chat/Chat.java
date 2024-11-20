@@ -1,5 +1,6 @@
 package com.peerlink_backend.peerlink_backend.data.entity.chat;
 
+import com.peerlink_backend.peerlink_backend.data.entity.message.Message;
 import com.peerlink_backend.peerlink_backend.data.entity.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -30,4 +31,7 @@ public class Chat {
     private List<User> users=new ArrayList<>();
     @Column(name = "timestamp")
     private LocalDateTime timestamp;
+
+    @OneToMany(mappedBy = "chat")
+    private List<Message> messages=new ArrayList<>();
 }
