@@ -1,6 +1,7 @@
 package com.peerlink_backend.peerlink_backend.data.entity.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.peerlink_backend.peerlink_backend.data.entity.chat.Chat;
 import com.peerlink_backend.peerlink_backend.data.entity.comment.Comment;
 import com.peerlink_backend.peerlink_backend.data.entity.post.Post;
 import com.peerlink_backend.peerlink_backend.data.entity.reel.Reel;
@@ -61,4 +62,7 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private List<Story> stories=new ArrayList<>();
+
+//    @ManyToMany(mappedBy = "users")
+//    private List<Chat> chats=new ArrayList<>();
 }
