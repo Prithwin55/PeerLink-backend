@@ -1,5 +1,6 @@
 package com.peerlink_backend.peerlink_backend.api.dto.chat;
 
+import com.peerlink_backend.peerlink_backend.api.response.message.MessageDtoDetails;
 import com.peerlink_backend.peerlink_backend.api.response.user.UserDtoDetails;
 
 import lombok.AllArgsConstructor;
@@ -24,4 +25,6 @@ public class ChatDto {
     private List<UserDtoDetails> users=new ArrayList<>();
 
     private LocalDateTime timestamp;
+
+    private  List<MessageDtoDetails> messages;
 }
