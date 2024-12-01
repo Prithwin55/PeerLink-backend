@@ -1,5 +1,6 @@
 package com.peerlink_backend.peerlink_backend.api.dto.user;
 import com.peerlink_backend.peerlink_backend.api.dto.post.PostDto;
+import com.peerlink_backend.peerlink_backend.api.response.post.PostDtoDetails;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,5 +21,5 @@ public class UserDto{
     private String gender;
     private List<Long> followers;
     private List<Long> following;
-    //private List<PostDto> posts;
+    private List<PostDtoDetails> posts;
 }
